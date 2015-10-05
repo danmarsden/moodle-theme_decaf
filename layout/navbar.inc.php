@@ -7,7 +7,12 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$custommenu = $OUTPUT->custom_menu();
+if (isset($PAGE->theme->settings->custommenuitems)) {
+    $custommenu = $OUTPUT->custom_menu($PAGE->theme->settings->custommenuitems);
+} else {
+    $custommenu = $OUTPUT->custom_menu();
+}
+
 $hascustommenu = (empty($PAGE->layout_options['nocustommenu']) && !empty($custommenu));
 ?>
 <header role="banner" class="navbar navbar-fixed-top<?php echo $html->navbarclass ?> moodle-has-zindex">
@@ -43,7 +48,7 @@ $hascustommenu = (empty($PAGE->layout_options['nocustommenu']) && !empty($custom
             </a>
             <div class="nav-collapse collapse">
                 <?php if ($hascustommenu && empty($decaf->custommenuinawesomebar)) {
-                    echo $OUTPUT->custom_menu();
+                    echo $custommenu;
                 } ?>
                 <ul class="nav pull-right">
                     <li><?php echo $OUTPUT->page_heading_menu(); ?></li>
